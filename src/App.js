@@ -6,6 +6,7 @@ import Logo from './components/Logo/Logo';
 import Navigation from './components/Navigation/Navigation';
 import Particles from 'react-particles-js';
 import Rank from './components/Rank/Rank';
+import Signin from './components/Signin/Signin';
 import './App.css';
 
 const app = new Clarifai.App({apiKey: '9454f41cc4824e66a4cf753bddee2e68'});
@@ -30,7 +31,8 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      box: {}
+      box: {},
+      route: 'signin'
     }
   }
 
@@ -74,14 +76,18 @@ class App extends Component {
         <Particles className="particles"
           params={particlesOptions} />
         <Navigation />
-        <Logo />
-        <Rank />
-        <ImageLinkForm 
-            onInputChange={this.onInputChange} 
-            onButtonSubmit={this.onButtonSubmit}
-           />
-        <FaceRecognition imageUrl={this.state.imageUrl}/>
-      </div>
+        { this.state.route === 'signin'
+          ? <Signin />
+          : <div>
+              <Logo />
+              <Rank />
+              <ImageLinkForm 
+                onInputChange={this.onInputChange} 
+                onButtonSubmit={this.onButtonSubmit}
+                />
+              <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
+              </div> }
+            </div>
     );
   }
 }
